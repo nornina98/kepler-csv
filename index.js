@@ -1,8 +1,9 @@
-const { parse } = require("csv-parse");
+const parse = require("csv-parse");
 const fs = require("fs");
 
 const habitablePlanets = [];
 
+// filtering habitable planet using kepler_data.csv
 function isHabitablePlanet(planet) {
   return (
     planet["koi_disposition"] === "CONFIRMED" &&
@@ -28,5 +29,11 @@ fs.createReadStream("kepler_data.csv")
     console.log(err);
   })
   .on("end", () => {
+    // Mapping and return habitable planet name in array
+    console.log(
+      habitablePlanets.map((planet) => {
+        return planet["kepler_name"];
+      })
+    );
     console.log(`${habitablePlanets.length} habitable planets found!`);
   });
